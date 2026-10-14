@@ -6,7 +6,7 @@ The final experiments reported in the associated manuscript were implemented in 
 
 ## Associated Manuscript
 
-**Beyond Overall Proficiency: CReST Reveals Domain-Relative Structure in Creative Thinking Across Education Systems**
+**Beyond Overall Proficiency: CReST Identifies Domain-Relative Predictive Structure in PISA 2022 Creative Thinking Across Education Systems**
 
 **Authors:** Kubra Kirca Demirbaga and Umit Demirbaga
 
