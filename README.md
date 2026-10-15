@@ -30,7 +30,9 @@ PISA-CReST/
 │   │   ├── 09_domain_profiles_beyond_overall_proficiency.ipynb
 │   │   ├── 10_cross_system_profile_stability.ipynb
 │   │   ├── 11_final_sensitivity_and_robustness.ipynb
-│   │   └── 13_computational_reproducibility_audit.ipynb
+│   │   ├── 13_computational_reproducibility_audit.ipynb
+│   │   ├── 15_CReST_Ridge_Baseline_Comparison.ipynb
+│   │   └── 23_CReST_vs_Ridge_Domain_Relative_Comparison.ipynb
 │   │
 │   ├── development/
 │   │   ├── 02_model_development_v5_v6.ipynb
@@ -43,7 +45,7 @@ PISA-CReST/
 └── README.md
 ```
 
-The repository distinguishes between the **final confirmatory workflow**, **development-stage analyses**, and **publication-assembly notebooks**.
+The repository distinguishes between the **locked CReST evaluation workflow**, **post-hoc baseline comparisons reported in the manuscript**, **development-stage analyses**, and **publication-assembly notebooks**. Notebooks 15 and 23 are located in `notebooks/main/` because they support the manuscript, but their comparisons were conducted **after** the original CReST evaluation and should not be described as pre-specified confirmatory experiments.
 
 ## Data
 
@@ -86,7 +88,7 @@ Raw and processed student-level files should **not** be committed to the reposit
 
 ## Main Reproducibility Workflow
 
-For reproducing the final locked analysis, the recommended notebook order is:
+For reproducing the **original locked CReST analysis**, the recommended notebook order is:
 
 ```text
 01_data_preparation_and_design_audit.ipynb
@@ -109,6 +111,15 @@ For reproducing the final locked analysis, the recommended notebook order is:
         ↓
 13_computational_reproducibility_audit.ipynb
 ```
+
+The post-hoc manuscript comparisons can be run after their respective source analyses have produced the required intermediate files:
+
+```text
+01 → 06 → 15    General hidden-target Ridge baseline
+01 → 06 → 09 → 23    Domain-relative Ridge baseline (all 10 plausible values)
+```
+
+These are **dependency paths**, not a replacement for the full locked workflow above. Notebook 23 does not depend on Notebook 15's exported results; it independently reconstructs the corresponding source-only summary features. Neither baseline notebook retrains CReST.
 
 ### Notebook 01 — Data Preparation and Design Audit
 
@@ -178,6 +189,37 @@ Audits:
 - checkpoint selection
 - software environment
 - computational hardware
+
+## Additional Manuscript Baseline Comparisons (Post Hoc)
+
+The following two notebooks are available in [`notebooks/main/`](notebooks/main/). They evaluate conventional **source-item summary features** against previously learned CReST representations under the same held-out-system and disjoint-item protocols. They were conducted **post hoc** and do not change the trained CReST checkpoints or the original locked evaluation.
+
+### Notebook 15 — General Hidden-Target Ridge Baseline
+
+**File:** [`15_CReST_Ridge_Baseline_Comparison.ipynb`](notebooks/main/15_CReST_Ridge_Baseline_Comparison.ipynb)
+
+Constructs **36 source-only features** from the three ideation processes (GDI, GCI, and EII), including observed credit, response behaviour, process measures, and availability indicators. A standardised Ridge regression (`alpha=1`) is fitted on the designated validation systems and evaluated on the corresponding held-out systems in both A/B transfer directions.
+
+- **Prerequisites:** Notebook 01's `processed/crest_v5_handoff/` outputs and Notebook 06's `processed/crest_final_test_sets/` indices and `results/creative_signal_safeguard/` prediction archives.
+- **Local outputs:** `results/ridge_summary_baseline/`, including fold-level estimates, paired system comparisons, and feature metadata.
+- **Purpose:** Compare the general CReST representation with an interpretable, feature-based baseline. This is not a controlled ablation of the Transformer architecture.
+
+The simple Ridge baseline performs slightly better than the original CReST general representation on the primary system-equal cross-item correlation measure. This result is retained in the manuscript alongside CReST's domain-relative findings.
+
+### Notebook 23 — Domain-Relative CReST vs. Ridge Comparison
+
+**File:** [`23_CReST_vs_Ridge_Domain_Relative_Comparison.ipynb`](notebooks/main/23_CReST_vs_Ridge_Domain_Relative_Comparison.ipynb)
+
+Compares the incremental information obtained by adding domain-specific representations to CReST's general representation against the corresponding gain from adding **12 source-domain summary features** to the feature-based Ridge model's **36 general features**. The outcome is hidden-domain performance **conditional on official PISA Creative Thinking proficiency**, assessed separately across all **10 plausible values**.
+
+- **Prerequisites:** Notebooks 01 and 06, plus Notebook 09's saved validation/test domain latent archives and `results/profile_beyond_overall_proficiency/crest_profile_beyond_pisa_ct_system.csv`.
+- **Evaluation:** Seven outer folds, two disjoint-item directions, four task domains, equal weighting of 63 education systems, and 10,000 paired system-bootstrap resamples.
+- **Integrity check:** Reproduces the original CReST domain results from Notebook 09 before interpreting baseline differences.
+- **Local outputs:** `results/crest_vs_ridge_domain_relative/` and the aggregate results archive `crest_vs_ridge_domain_relative_results.zip`. These contain the system-level comparisons underlying the manuscript's **Figure 13**; plotting that figure is a separate step.
+
+The comparison finds larger **incremental domain-relative prediction gains** for CReST in Social, Scientific, and Written tasks; the Visual-domain contrast is inconclusive. These findings do not establish the superiority of the Transformer architecture or independent psychological ability dimensions. The baseline uses manually aggregated features of different dimensionality, and the domain representations may retain information about assessment exposure.
+
+**Reproduction note:** By default, both notebooks resolve project inputs relative to the current working directory. Run them with the repository root as the working directory, or set the `CREST_PROJECT_DIR` environment variable to its absolute path before running the notebooks from `notebooks/main/`. Required intermediate student-level files must be generated locally from the official PISA sources and should not be committed to GitHub.
 
 ## Development-Stage Notebooks
 
@@ -253,7 +295,9 @@ The confirmatory analysis follows several safeguards intended to reduce leakage 
 - model parameters are not updated during confirmatory test evaluation;
 - disjoint-item evaluation hides all information associated with target items;
 - survey-weighted analyses use the official PISA sampling design;
-- plausible-value analyses are performed separately across the ten official Creative Thinking plausible values rather than averaging plausible values within students.
+- plausible-value analyses are performed separately across the ten official Creative Thinking plausible values rather than averaging plausible values within students;
+- Notebook 15 and Notebook 23 are clearly identified as **post-hoc baseline comparisons**, not components of the original architecture-lock protocol;
+- the baseline probes use validation systems for supervised fitting and evaluate predictions on the corresponding held-out test systems, without retraining CReST.
 
 ## Assessment Design
 
@@ -277,7 +321,7 @@ The repository provides code required to reconstruct the analytical datasets fro
 
 Users are responsible for obtaining the source data directly from OECD and for complying with the applicable OECD data-use conditions.
 
-Generated student-level analytical arrays, latent representations, or processed microdata should not be redistributed through this repository.
+Generated student-level analytical arrays, latent representations, individual prediction archives (including `.npz` files), or processed microdata should not be redistributed through this repository. Only sufficiently aggregated, disclosure-checked results should be shared.
 
 ## Outputs Included in the Notebooks
 
@@ -297,7 +341,7 @@ Large exploratory outputs, participant-level displays, obsolete debugging output
 
 If you use this repository, please cite the associated manuscript:
 
-> Kirca Demirbaga, K., & Demirbaga, U. *Beyond Overall Proficiency: CReST Reveals Domain-Relative Structure in Creative Thinking Across Education Systems.*
+> Kirca Demirbaga, K., & Demirbaga, U. *Beyond Overall Proficiency: CReST Identifies Domain-Relative Predictive Structure in PISA 2022 Creative Thinking Across Education Systems.*
 
 Full bibliographic information and DOI will be added after publication.
 
@@ -314,4 +358,4 @@ Ankara University, Türkiye
 
 This repository accompanies the CReST research manuscript and is provided to support transparency and computational reproducibility.
 
-The repository reflects the final locked analytical workflow used in the manuscript. Repository contents may be updated to reflect the final published version, bibliographic information, and DOI.
+The repository contains the original locked CReST workflow and two separately identified exploratory comparisons reported in the manuscript. Repository contents may be updated to reflect the final published version, bibliographic information, and DOI.
