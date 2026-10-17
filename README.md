@@ -1,12 +1,12 @@
 # PISA-CReST
 
-Open-source code and reproducibility materials for **CReST**, a design-robust self-supervised multi-view Transformer framework for analysing domain-relative structure in PISA 2022 Creative Thinking data across education systems.
+Open-source code and reproducibility materials for **Creative-thinking Representation via a Self-supervised Transformer (CReST)**, a design-robust self-supervised multi-view Transformer framework for analysing domain-relative structure in PISA 2022 Creative Thinking data across education systems.
 
 The final experiments reported in the associated manuscript were implemented in **Python 3.11.10** using **PyTorch 2.9.0+cpu** and were conducted entirely in a **CPU-only computing environment**.
 
 ## Associated Manuscript
 
-**Beyond Overall Proficiency: CReST Identifies Domain-Relative Predictive Structure in PISA 2022 Creative Thinking Across Education Systems**
+**Beyond Overall Proficiency: A Self-Supervised Framework for Domain-Relative Prediction in PISA 2022 Creative Thinking**
 
 **Authors:** Kubra Kirca Demirbaga and Umit Demirbaga
 
