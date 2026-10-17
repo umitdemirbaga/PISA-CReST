@@ -149,7 +149,7 @@ Each of the 63 education systems serves exactly once as an entirely unseen test 
 - 9 validation systems
 - 9 unseen test systems
 
-No held-out test-system results are used for architecture or checkpoint selection.
+For each final outer-fold model, its designated test systems were excluded from parameter fitting and checkpoint selection. Architecture development used Fold 0 training and validation systems that subsequently served as test systems in other folds. Thus, architecture selection was not fully nested within the seven-fold evaluation.
 
 ### Notebook 06 — Final Cross-System Evaluation
 
