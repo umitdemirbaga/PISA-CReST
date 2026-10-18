@@ -341,7 +341,7 @@ Large exploratory outputs, participant-level displays, obsolete debugging output
 
 If you use this repository, please cite the associated manuscript:
 
-> Kirca Demirbaga, K., & Demirbaga, U. *Beyond Overall Proficiency: CReST Identifies Domain-Relative Predictive Structure in PISA 2022 Creative Thinking Across Education Systems.*
+> Kirca Demirbaga, K., & Demirbaga, U. *Beyond Overall Proficiency: A Self-Supervised Framework for Domain-Relative Prediction in PISA 2022 Creative Thinking.*
 
 Full bibliographic information and DOI will be added after publication.
 
