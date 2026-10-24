@@ -204,7 +204,7 @@ Constructs **36 source-only features** from the three ideation processes (GDI, G
 - **Local outputs:** `results/ridge_summary_baseline/`, including fold-level estimates, paired system comparisons, and feature metadata.
 - **Purpose:** Compare the general CReST representation with an interpretable, feature-based baseline. This is not a controlled ablation of the Transformer architecture.
 
-CReST achieved a slightly higher system-equal general hidden-item transfer correlation than the feature-based Ridge baseline (Spearman $\rho=0.515$ versus $0.502$). The paired CReST-minus-Ridge difference was $\Delta\rho=0.013$ (95% system-bootstrap CI [0.009, 0.017]). Although the confidence interval excludes zero, the absolute improvement was small and does not establish that the Transformer architecture is necessary or universally superior.
+CReST achieved a slightly higher system-equal general hidden-item transfer correlation than the feature-based Ridge baseline (Spearman $\rho=0.515$ versus $0.503$). The paired CReST-minus-Ridge difference was $\Delta\rho=0.012$ (95% system-bootstrap CI [0.009, 0.017]). Although the confidence interval excludes zero, the absolute improvement was small and does not establish that the Transformer architecture is necessary or universally superior.
 
 ### Notebook 23 — Domain-Relative CReST vs. Ridge Comparison
 
