@@ -6,7 +6,7 @@ The final experiments reported in the associated manuscript were implemented in 
 
 ## Associated Manuscript
 
-**Beyond Overall Proficiency: A Self-Supervised Framework for Domain-Relative Prediction in PISA 2022 Creative Thinking**
+**Beyond Overall Proficiency: Assessment-Design-Aware Domain-Relative Prediction in PISA 2022 Creative Thinking**
 
 **Authors:** Kubra Kirca Demirbaga and Umit Demirbaga
 
@@ -341,7 +341,7 @@ Large exploratory outputs, participant-level displays, obsolete debugging output
 
 If you use this repository, please cite the associated manuscript:
 
-> Kirca Demirbaga, K., & Demirbaga, U. *Beyond Overall Proficiency: A Self-Supervised Framework for Domain-Relative Prediction in PISA 2022 Creative Thinking.*
+> Kirca Demirbaga, K., & Demirbaga, U. *Beyond Overall Proficiency: Assessment-Design-Aware Domain-Relative Prediction in PISA 2022 Creative Thinking.*
 
 Full bibliographic information and DOI will be added after publication.
 
