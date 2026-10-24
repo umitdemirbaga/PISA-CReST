@@ -1,6 +1,6 @@
 # PISA-CReST
 
-Open-source code and reproducibility materials for **Creative-thinking Representation via a Self-supervised Transformer (CReST)**, a design-robust self-supervised multi-view Transformer framework for analysing domain-relative structure in PISA 2022 Creative Thinking data across education systems.
+Open-source code and reproducibility materials for **Creative-thinking Representation via a Self-supervised Transformer (CReST)**, an assessment-design-aware, self-supervised multi-view Transformer framework for examining hidden-item transfer and domain-relative predictive information in PISA 2022 Creative Thinking data across education systems.
 
 The final experiments reported in the associated manuscript were implemented in **Python 3.11.10** using **PyTorch 2.9.0+cpu** and were conducted entirely in a **CPU-only computing environment**.
 
@@ -12,7 +12,7 @@ The final experiments reported in the associated manuscript were implemented in 
 
 The study analyses PISA 2022 Creative Thinking data from **142,564 students across 63 education systems** and uses **32 scored Creative Thinking items** spanning Written, Visual, Social, and Scientific domains.
 
-CReST is designed to learn transferable creative-performance representations while reducing dependence on matrix-sampled assessment design, booklet structure, contextual information, and education-system-specific signals.
+CReST learns representations from multiple assessment data views, using a design-calibrated general representation and separate contextual and domain-specific components. The framework aims to reduce recoverable assessment-design information while preserving predictive information for hidden-item transfer. These controls do not establish complete design invariance or measurement invariance across education systems.
 
 ## Repository Structure
 
@@ -137,7 +137,7 @@ This notebook also constructs the fixed cross-system splits and the model-ready 
 
 ### Notebook 04 — Final Architecture Lock
 
-Implements and validates the final locked CReST architecture used for confirmatory evaluation.
+Documents the final CReST architecture selected during development and subsequently fixed for the seven-fold held-out-system evaluation.
 
 ### Notebook 05 — Final Cross-System Training
 
@@ -153,7 +153,7 @@ For each final outer-fold model, its designated test systems were excluded from 
 
 ### Notebook 06 — Final Cross-System Evaluation
 
-Performs confirmatory evaluation on the unseen education systems, including reconstruction performance, nuisance robustness, and disjoint-item creative-signal transfer.
+Evaluates the locked CReST checkpoints on their corresponding held-out education systems, including reconstruction performance, assessment-design predictability, and disjoint-item hidden-target transfer.
 
 ### Notebook 07 — Contextual Robustness and Subgroup Analysis
 
@@ -204,7 +204,7 @@ Constructs **36 source-only features** from the three ideation processes (GDI, G
 - **Local outputs:** `results/ridge_summary_baseline/`, including fold-level estimates, paired system comparisons, and feature metadata.
 - **Purpose:** Compare the general CReST representation with an interpretable, feature-based baseline. This is not a controlled ablation of the Transformer architecture.
 
-The simple Ridge baseline performs slightly better than the original CReST general representation on the primary system-equal cross-item correlation measure. This result is retained in the manuscript alongside CReST's domain-relative findings.
+CReST achieved a slightly higher system-equal general hidden-item transfer correlation than the feature-based Ridge baseline (Spearman $\rho=0.515$ versus $0.502$). The paired CReST-minus-Ridge difference was $\Delta\rho=0.013$ (95% system-bootstrap CI [0.009, 0.017]). Although the confidence interval excludes zero, the absolute improvement was small and does not establish that the Transformer architecture is necessary or universally superior.
 
 ### Notebook 23 — Domain-Relative CReST vs. Ridge Comparison
 
@@ -266,7 +266,7 @@ CUDA: not used
 GPU: not used
 ```
 
-All final training and confirmatory inference were performed on the same **CPU-only workstation**.
+All final cross-system training and held-out-system inference were performed on the same **CPU-only workstation**.
 
 The final seven-fold training stage comprised **125 epochs** and required approximately **33.16 hours** in total.
 
@@ -286,7 +286,7 @@ Runtime may differ substantially depending on the processor, memory configuratio
 
 ## Reproducibility Notes
 
-The confirmatory analysis follows several safeguards intended to reduce leakage and post-hoc model adaptation:
+The final held-out-system evaluation follows several safeguards intended to reduce information leakage and model adaptation during evaluation:
 
 - preprocessing parameters are estimated using training systems only;
 - education systems, rather than individual students, are held out during outer-fold evaluation;
@@ -339,11 +339,13 @@ Large exploratory outputs, participant-level displays, obsolete debugging output
 
 ## Citation
 
-If you use this repository, please cite the associated manuscript:
+This repository accompanies the manuscript:
 
-> Kirca Demirbaga, K., & Demirbaga, U. *Beyond Overall Proficiency: Assessment-Design-Aware Domain-Relative Prediction in PISA 2022 Creative Thinking.*
+> Kirca Demirbaga, K., & Demirbaga, U. *Beyond Overall Proficiency: Assessment-Design-Aware Domain-Relative Prediction in PISA 2022 Creative Thinking.* Manuscript under review.
 
-Full bibliographic information and DOI will be added after publication.
+Until the manuscript is publicly available, users may reference this repository by its GitHub URL and the relevant commit or release version.
+
+The final journal citation and DOI will be added following publication.
 
 ## Authors
 
